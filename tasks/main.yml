@@ -1,0 +1,127 @@
+---
+# tasks file for docbuilder
+- name: Install necessary packages and fonts
+  apt:
+    name={{ item }}
+    update_cache=yes
+    cache_valid_time=86400
+    install-recommends=no
+    state=present
+  with_items:
+    - default-jre-headless
+    - fonts-liberation
+
+- name: Check if saxon is installed
+  stat: path=/usr/local/bin/saxon
+  register: saxon_path
+  ignore_errors: yes
+
+- name: Download saxon
+  get_url:
+    url={{ item.src }}
+    dest=/tmp/{{ item.tmp }}
+  with_items: "{{ docbuilder_saxon_files }}"
+  when: not saxon_path.stat.exists
+
+- name: Create saxon installation directories
+  file:
+    path={{ item.dest }}
+    state=directory
+  with_items: "{{ docbuilder_saxon_files }}"
+  when: not saxon_path.stat.exists
+
+- name: Unzip required saxon files
+  unarchive:
+    src=/tmp/{{ item.tmp }}
+    dest={{ item.dest }}
+    copy=no
+  with_items: "{{ docbuilder_saxon_files }}"
+  when: not saxon_path.stat.exists
+
+- name: Check if fop is installed
+  stat:
+    path=/usr/local/bin/fop
+    follow=yes
+  register: fop_path
+  ignore_errors: yes
+
+- name: Download fop
+  get_url:
+    url={{ item.src }}
+    dest=/tmp/{{ item.tmp }}
+  with_items: "{{ docbuilder_fop_files }}"
+  when: not fop_path.stat.exists
+
+- name: Create fop installation directories
+  file:
+    path={{ item.dest }}
+    state=directory
+  with_items: "{{ docbuilder_fop_files }}"
+  when: not fop_path.stat.exists
+
+- name: Unzip required fop files
+  unarchive:
+    src=/tmp/{{ item.tmp }}
+    dest={{ item.dest }}
+    copy=no
+  with_items: "{{ docbuilder_fop_files }}"
+  when: not fop_path.stat.exists
+
+- name: Apply proper permissions for fop
+  file:
+    path=/usr/local/bin/fop-{{ fop_version }}/fop
+    mode=o+x
+
+- name: Create symlink to fop
+  file:
+    src=/usr/local/bin/fop-{{ fop_version }}/fop
+    dest=/usr/local/bin/fop
+    state=link
+
+- name: Remove temporary files
+  file:
+    path=/tmp/{{ item.tmp }}
+    state=absent
+  with_items: "{{ docbuilder_fop_files }}"
+  when: not fop_path.stat.exists
+
+- name: Compact installations
+  file:
+    path="/usr/local/bin/{{ item }}"
+    state=absent
+  with_items:
+    - fop-{{ fop_version }}/docs
+    - fop-{{ fop_version }}/examples
+    - fop-{{ fop_version }}/fop.bat
+    - fop-{{ fop_version }}/fop.cmd
+    - fop-{{ fop_version }}/fop.js
+    - fop-{{ fop_version }}/javadocs
+    - fop-{{ fop_version }}/status.xml
+    - saxon/saxon9-test.jar
+    - saxon/saxon9-xqj.jar
+    - saxon/doc
+    - saxon/notices
+
+- name: Create fop configuration directory
+  file:
+    path=/etc/docbuilder
+    state=directory
+
+- name: Download latest version of configuration and buildscript
+  git:
+    repo=https://github.com/radicallyopensecurity/docbuilder
+    dest=/tmp/docbuilder
+    depth=1
+    accept_hostkey=yes
+
+- name: Deploy configuration
+  copy:
+    src=/tmp/docbuilder/rosfop.xconf
+    dest=/etc/docbuilder/rosfop.xconf
+    remote_src=true
+
+- name: Deploy initial buildscript
+  copy:
+    src=/tmp/docbuilder/docbuilder.py
+    dest=/usr/local/bin/docbuilder.py
+    remote_src=true

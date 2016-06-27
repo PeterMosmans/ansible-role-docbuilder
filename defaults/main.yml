@@ -1,0 +1,11 @@
+---
+# defaults file for docbuilder
+fop_version: 2.1
+docbuilder_saxon_files:
+  - src: https://downloads.sourceforge.net/project/saxon/Saxon-HE/9.7/SaxonHE9-7-0-6J.zip
+    tmp: saxon.zip
+    dest: /usr/local/bin/saxon
+docbuilder_fop_files:
+  - src: https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-{{ fop_version }}-bin.zip
+    tmp: fop.zip
+    dest: /usr/local/bin
