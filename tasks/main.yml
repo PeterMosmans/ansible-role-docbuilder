@@ -67,11 +67,6 @@
   with_items: "{{ docbuilder_fop_files }}"
   when: not fop_path.stat.exists
 
-- name: Apply proper permissions for fop
-  file:
-    path=/usr/local/bin/fop-{{ fop_version }}/fop
-    mode=o+x
-
 - name: Create symlink to fop
   file:
     src=/usr/local/bin/fop-{{ fop_version }}/fop
@@ -125,3 +120,11 @@
     src=/tmp/docbuilder/docbuilder.py
     dest=/usr/local/bin/docbuilder.py
     remote_src=true
+
+- name: Apply proper permissions
+  file:
+    path=/usr/local/bin/{{ item }}
+    mode=o+x
+  with_items:
+    - fop-{{ fop_version }}/fop
+    - docbuilder.py
