@@ -1,15 +1,6 @@
 ---
 # tasks file for docbuilder
-- name: Install necessary packages and fonts
-  apt:
-    name={{ item }}
-    update_cache=yes
-    cache_valid_time=86400
-    install-recommends=no
-    state=present
-  with_items:
-    - default-jre-headless
-    - fonts-liberation
+- include: dependencies-{{ ansible_os_family }}.yml
 
 - name: Check if saxon is installed
   stat: path=/usr/local/bin/saxon
