@@ -1,0 +1,9 @@
+---
+
+- name: Install necessary packages and fonts
+  portage:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - virtual/jre
+    - media-fonts/liberation-fonts
