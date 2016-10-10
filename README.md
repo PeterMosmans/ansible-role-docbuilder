@@ -3,7 +3,7 @@ Ansible Role: docbuilder
 
 Build status for this role: [![Build Status](https://travis-ci.org/PeterMosmans/ansible-role-docbuilder.svg)](https://travis-ci.org/PeterMosmans/ansible-role-docbuilder)
 
-This role installs the docbuilder toolchain, to create pentext reports.
+This role installs the docbuilder toolchain, to create PenText reports. See https://github.com/radicallyopensecurity/pentext and https://pentext.org/ for more information on PenText.
 
 Requirements
 ------------
