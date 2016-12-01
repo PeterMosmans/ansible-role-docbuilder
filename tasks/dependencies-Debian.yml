@@ -10,3 +10,4 @@
   with_items:
     - default-jre-headless
     - fonts-liberation
+    - unzip

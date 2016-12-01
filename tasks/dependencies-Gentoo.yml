@@ -5,5 +5,6 @@
     name: "{{ item }}"
     state: present
   with_items:
-    - virtual/jre
     - media-fonts/liberation-fonts
+    - unzip
+    - virtual/jre
