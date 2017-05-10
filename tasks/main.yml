@@ -98,10 +98,11 @@
     url: https://raw.githubusercontent.com/radicallyopensecurity/pentext/master/chatops/python/docbuilder.py
     dest: /usr/local/bin/docbuilder.py
 
-- name: Download latest ROS FOP configuration file
-  get_url:
-    url: https://raw.githubusercontent.com/radicallyopensecurity/pentext/master/xml/rosbot/fop.conf
-    dest: /etc/docbuilder/rosfop.xconf
+- name: Template the FOP configuration file
+  template:
+    src=fop.xconf.j2
+    dest=/etc/docbuilder/fop.xconf
+    mode="0644"
 
 - name: Apply proper permissions
   file:

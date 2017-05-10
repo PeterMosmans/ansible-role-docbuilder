@@ -31,12 +31,66 @@ docbuilder_saxon_files:
 
 
 
-**docbuilder_saxon_files** : The source location of the fop binaries. The default can be found in `defaults/main.yml`..
+**docbuilder_saxon_files** : The source location of the fop binaries. The default can be found in `defaults/main.yml`:
 ```
 docbuilder_fop_files:
   - src: https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-{{ fop_version }}-bin.zip
 ```
 
+### FOP
+
+The following parameters configure FOP:
+**docbuilder_font_base** : The base location of the fonts. The default can be found in `defaults/main.yml`:
+```
+docbuilder_font_base: /usr/share/fonts/truetype/
+```
+
+
+
+**docbuilder_fonts** : A list of the fonts to be included in the FOP file. A default list can be found in `defaults/main.yml`:
+```
+docbuilder_fonts:
+  - url: liberation/LiberationSansNarrow-Regular.ttf
+    name: LiberationSansNarrow
+    style: normal
+    weight: normal
+  - url: liberation/LiberationSansNarrow-Bold.ttf
+    name: LiberationSansNarrow
+    style: normal
+    weight: bold
+  - url: liberation/LiberationSansNarrow-Italic.ttf
+    name: LiberationSansNarrow
+    style: italic
+    weight: normal
+  - url: liberation/LiberationSansNarrow-BoldItalic.ttf
+    name: LiberationSansNarrow
+    style: italic
+    weight: bold
+  - url: liberation/LiberationMono-Regular.ttf
+    name: LiberationMono
+    style: normal
+    weight: normal
+  - url: liberation/LiberationMono-Bold.ttf
+    name: LiberationMono
+    style: normal
+    weight: bold
+  - url: liberation/LiberationMono-Italic.ttf
+    name: LiberationMono
+    style: italic
+    weight: normal
+  - url: liberation/LiberationMono-BoldItalic.ttf
+    name: LiberationMono
+    style: italic
+    weight: bold
+```
+
+
+
+**docbuilder_page_height** and **docbuilder_page_width**: The page height and width. The defaults can be found in `defaults/main.yml`:
+```
+docbuilder_page_height: 29.7cm
+docbuilder_page_width: 21cm
+```
 
 Dependencies
 ------------
