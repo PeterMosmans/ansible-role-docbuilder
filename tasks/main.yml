@@ -94,23 +94,14 @@
     state=directory
 
 - name: Download latest version of configuration and buildscript
-  git:
-    repo=https://github.com/radicallyopensecurity/docbuilder
-    dest=/tmp/docbuilder
-    depth=1
-    accept_hostkey=yes
+  get_url:
+    url: https://raw.githubusercontent.com/radicallyopensecurity/pentext/master/chatops/python/docbuilder.py
+    dest: /usr/local/bin/docbuilder.py
 
-- name: Deploy configuration
-  copy:
-    src=/tmp/docbuilder/rosfop.xconf
-    dest=/etc/docbuilder/rosfop.xconf
-    remote_src=true
-
-- name: Deploy initial buildscript
-  copy:
-    src=/tmp/docbuilder/docbuilder.py
-    dest=/usr/local/bin/docbuilder.py
-    remote_src=true
+- name: Download latest ROS FOP configuration file
+  get_url:
+    url: https://raw.githubusercontent.com/radicallyopensecurity/pentext/master/xml/rosbot/fop.conf
+    dest: /etc/docbuilder/rosfop.xconf
 
 - name: Apply proper permissions
   file:
