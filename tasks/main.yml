@@ -1,6 +1,6 @@
 ---
 # tasks file for docbuilder
-- include: dependencies-{{ ansible_os_family }}.yml
+- include_tasks: dependencies-{{ ansible_os_family }}.yml
 
 - name: Check if saxon is installed
   stat: path=/usr/local/bin/saxon
@@ -111,3 +111,13 @@
   with_items:
     - fop-{{ fop_version }}/fop
     - docbuilder.py
+
+- name: Install additional font packages
+  apt:
+    name={{ item }}
+    update_cache=yes
+    cache_valid_time=86400
+    install-recommends=no
+    state=present
+  with_items: "{{ docbuilder_font_packages|default([]) }}"
+

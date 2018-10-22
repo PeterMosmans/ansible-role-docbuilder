@@ -47,7 +47,7 @@ docbuilder_font_base: /usr/share/fonts/truetype/
 
 
 
-**docbuilder_fonts** : A list of the fonts to be included in the FOP file. A default list can be found in `defaults/main.yml`:
+**docbuilder_fonts** : A list of fonts to be included in the FOP file. A default list can be found in `defaults/main.yml`:
 ```
 docbuilder_fonts:
   - url: liberation/LiberationSansNarrow-Regular.ttf
@@ -84,7 +84,12 @@ docbuilder_fonts:
     weight: bold
 ```
 
-
+**docbuilder_font_packages** : Optional - A list of (font) packages to install.
+Example:
+```
+docbuilder_font_packages:
+  - fonts-arkpandora
+```
 
 **docbuilder_page_height** and **docbuilder_page_width**: The page height and width. The defaults can be found in `defaults/main.yml`:
 ```
