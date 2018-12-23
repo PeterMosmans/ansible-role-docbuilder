@@ -2,6 +2,12 @@
 # tasks file for docbuilder
 - include_tasks: dependencies-{{ ansible_os_family }}.yml
 
+- name: Disable assistive technology
+  lineinfile:
+    path: /etc/java-8-openjdk/accessibility.properties
+    state: absent
+    regexp: '^assistive_technologies'
+
 - name: Check if saxon is installed
   stat: path=/usr/local/bin/saxon
   register: saxon_path
